@@ -127,3 +127,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # AbstractUser를 사용하기 위한 셋팅.
 AUTH_USER_MODEL = 'users.User'
+
+# 로그인 / 로그아웃 성공 후 이동 경로 지정.
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
