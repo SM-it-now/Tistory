@@ -3,13 +3,13 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
-# AbstractUser로 user모델 확장
+# gender 필드의 choice 인자를 추가.
 GENDER_CHOICES = (
     (0, 'Male'),
     (1, 'Female')
 )
 
-
+# AbstractUser로 user모델 확장
 class User(AbstractUser):
     email = models.EmailField(verbose_name='email', max_length=255, unique=True)
     username = models.CharField(max_length=100)
