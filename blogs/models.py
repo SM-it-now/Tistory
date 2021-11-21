@@ -11,5 +11,5 @@ class Post(BaseModel):
     image = models.ImageField(blank=True, null=True)
 
     def __str__(self):
-        return '{} : {}'.format(self.user, self.title)
+        return '{} : {} / {}'.format(self.id, self.title, self.user)
 

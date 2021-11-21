@@ -1,0 +1,18 @@
+{% extends 'blogs/base.html' %}
+
+{% block title%}{{ post.title }}{% endblock %}
+
+{% block content %}
+<!--Post Content-->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <h1>{{ post.title }}</h1>
+            {% if post.image %}
+            <img src="{{ post.image.url }}">
+            {% endif %}
+            <p>{{ post.content }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
