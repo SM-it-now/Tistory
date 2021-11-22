@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.shortcuts import render, redirect, get_object_or_404, reverse, HttpResponseRedirect
 from .models import Post, Comment
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
 
 # Create your views here.
@@ -18,9 +19,18 @@ def post_detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     comments = Comment.objects.filter(post=post_id)
 
+    # 좋아요 디폴트
+    is_liked = False
+
+    # 좋아요 토글
+    if post.likes.filter(id=request.user.id).exists():
+        is_liked = True
+
     context = {
         'post': post,
-        'comments': comments
+        'comments': comments,
+        'is_liked': is_liked,
+        'total_likes': post.total_likes()
     }
     return render(request, 'blogs/post_detail.html', context)
 
@@ -72,6 +82,22 @@ def comment_write(request):
     }
 
     return render(request, 'blogs/post_detail.html', context)
+
+# 좋아요 기능
+@login_required
+@require_POST
+def post_like(request):
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    is_liked = post.likes.filter(id=request.user.id).exists()
+
+    # 좋아요 토글 기능 구현
+    if is_liked:
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+
+    return redirect(reverse('blogs:post_detail', kwargs={'post_id': post.id}))
+
 
 
 

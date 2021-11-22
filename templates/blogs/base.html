@@ -25,6 +25,30 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
           rel="stylesheet" type="text/css"/>
 
+    <!--    jquery-->
+    <script type="text/javascript">
+      $(document).ready(function(event) {
+        $(document).on('click', '#unlike', function(event) {
+          event.preventDefault();
+          var pk = $(this).attr('value');
+          $.ajax({
+            type: 'POST',
+            url: '{% url "blogs:post_like" %}',
+            data: {'id':pk, 'csrfmiddlewaretoken': '{{ csrftoken }}' },
+            dataType: 'json',
+            success: function(response){
+              $('#like_section').html(response['form'])
+            },
+            error: function(rs, e){
+              console.log(rs.responseText);
+            },
+          });
+        });
+      });
+
+    </script>
+
+
 </head>
 <body>
 <!-- Navigation-->
